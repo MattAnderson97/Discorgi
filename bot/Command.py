@@ -34,5 +34,5 @@ class Command:  # class command(abc):
         return self.command + " - _" + (self.usage or ' ') + "_" + "\n    Aliases: **" + ", ".join(self.aliases) + "**"
 
     @abstractmethod
-    async def execute(self, client, channel, command, sender):
+    async def execute(self, client, channel, command, sent_message, sender):
         pass

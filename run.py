@@ -2,6 +2,8 @@ import discord
 from bot import init, CommandTools
 from config import settings
 
+import re
+
 client = discord.Client()
 
 
@@ -14,12 +16,17 @@ async def on_ready():
 async def on_message(message):
     msg = message.content.lower()
     channel = message.channel
-    if not message.author.bot:
-        for command in CommandTools.COMMANDS:
-            if command.command.lower() == msg.split(" ")[0] or msg.split(" ")[0] in command.aliases:
-                print("Executing command: " + msg.split(" ")[0])
-                await command.execute(client, channel, msg, message.author)
-                break
+
+    pattern = r'\/\/+[a-zA-Z0-9]+$'
+    match = re.match(pattern, msg)
+
+    if match:
+        if not message.author.bot:
+            for command in CommandTools.COMMANDS:
+                if command.command.lower() == msg.split(" ")[0] or msg.split(" ")[0] in command.aliases:
+                    print("Executing command: " + msg)
+                    await command.execute(client, channel, msg, message, message.author)
+                    break
 
 
 if __name__ == "__main__":

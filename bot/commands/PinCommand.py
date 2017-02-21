@@ -8,7 +8,7 @@ class PinCmd(Command):
     def __init__(self, command, client=None, for_message=None, usage=None, aliases=[], **kwargs):
         super().__init__(command=command, client=client, for_message=for_message, usage=usage, aliases=aliases, **kwargs)
 
-    async def execute(self, client, channel, command, sender):
+    async def execute(self, client, channel, command, sent_message, sender):
         if len(command.split(" ")) < 2:
             await client.send_message(channel, "Not enough arguments! _usage: " + self.usage + "_")
             return
